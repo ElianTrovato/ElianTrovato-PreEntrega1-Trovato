@@ -3,4 +3,25 @@
     height: 70px;
     background-color: rgb(255, 255, 255);
     border-radius: 50px;
+    float: left;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.CartImg{
+    width: 50px;
+    height: 50px;
+}
+.CartWidget{
+    float: right;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    align-items: center;
+    gap: 20px;
+    margin-right: 20px;
+    background-color: rgba(247, 226, 40, 0.671);
+    border-radius: 20px;
+    padding: 10px;
+
 }

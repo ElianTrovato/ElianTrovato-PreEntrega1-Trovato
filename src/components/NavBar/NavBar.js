@@ -1,32 +1,46 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import CartWidget from '../CartWidget/CartWidget';
-import CartIcon from '../Img/iconApp.png'
+import "./Navbar.css"
+import iconApp from "../Img/iconApp.png"
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { db } from '../../services/firebase'
 
+const NavBar = () => {
+  const [categories, setCategories] = useState([])
 
-function NavBar() {
-    return (
-        <div>
-            <nav class="navbar navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <CartWidget icon= {CartIcon}/>
-                    <NavLink class="navbar-brand" href="Ferreteria" to='/' className={({isActive})=> isActive? 'ActiveOption' : 'option'}>Ferretería</NavLink>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <NavLink to='/category/moladora' className={({isActive})=> isActive? 'ActiveOption' : 'option'}>Moladora</NavLink>
-                        <NavLink to='/category/taladro' className={({isActive})=> isActive? 'ActiveOption' : 'option'}>Taladro</NavLink>
-                        <NavLink to='/category/lija' className={({isActive})=> isActive? 'ActiveOption' : 'option'}>Lija</NavLink>
-                        <NavLink to='/category/hidrolavadora' className={({isActive})=> isActive? 'ActiveOption' : 'option'}>Hidrolavadora</NavLink>
-                    </div>
-                    </div>
-                </div>
-            </nav>
+  useEffect(() => {
+    const collectionRef = query(collection(db, 'categories'), orderBy('order'))
 
-        </div>
-    );
-  }
-  
+    getDocs(collectionRef).then(response => {
+      console.log(response)
+
+      const categoriesAdapted = response.docs.map(doc => {
+        const data = doc.data()
+        return { id: doc.id, ...data}
+      })
+
+      setCategories(categoriesAdapted)
+    })
+  }, [])
+
+  console.log(categories)
+
+  return (
+      <nav className="NavBar" >
+          <div className='subNavBar'>
+          <CartWidget className="img" icon={iconApp} />
+            <Link to='/' style={{color: "black", textDecoration: "none"}}>
+              <h3 className="titulo">Ecommerce Ferreteria</h3>
+            </Link>
+          </div>
+          <div className="Categories">
+              <button className="boton"><NavLink to='/category/herramientas Industriales' className={({isActive}) => isActive ? 'ActiveOption' : 'Option'} style={{color: "black", textDecoration: "none"}}>Herramientas Industriales</NavLink></button>
+              <button className="boton"><NavLink to='/category/herramientas Electricas' className={({isActive}) => isActive ? 'ActiveOption' : 'Option'} style={{color: "black", textDecoration: "none"}}>Herramientas Electricas</NavLink></button>
+          </div>
+      </nav>
+
+  )
+}
   export default NavBar;

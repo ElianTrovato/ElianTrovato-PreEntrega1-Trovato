@@ -1,0 +1,29 @@
+.NavBar{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 50px;
+    background-color: rgb(250, 228, 168);
+    height: 150px;
+
+}
+
+.titulo{
+    text-align: center;
+    color: black;
+    margin-top: 10px;
+    margin-left: 130px;
+}
+.Categories{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    margin-left: 40px;
+    justify-content: center;
+}
+.boton{
+    background-color: rgb(250, 245, 175) !important;
+    color: black !important;
+    text-decoration: none;
+    border-radius: 5px;
+}
